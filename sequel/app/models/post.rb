@@ -2,9 +2,15 @@ class Post < Sequel::Model
   one_to_many :comments
   many_to_many :tags
 
-  def_dataset_method(:of){ |name| where(author: name) }
+  dataset_module do
+    def of(name)
+      where(author: name)
+    end
 
-  def_dataset_method(:start_with){ |str| where(title: /^#{str}/) }
+    def start_with(str)
+      where(title: /^#{str}/)
+    end
+  end
 
   def related_request
     Post.distinct.select(:id, :author, :title).

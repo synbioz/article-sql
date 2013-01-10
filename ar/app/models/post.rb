@@ -7,7 +7,7 @@ class Post < ActiveRecord::Base
   scope :of, ->(name){ where(author: name) }
   scope :start_with, ->(str){ where(self.arel_table[:title].matches("#{str}%")) }
 
-  def related
+  def related_request
     t = Post.arel_table
     pt1 = Arel::Table.new(:posts_tags)
     pt2 = pt1.alias
